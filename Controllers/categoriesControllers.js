@@ -1,39 +1,35 @@
 const express = require("express");
-let { Catagory ,Ingredient} = require("../db/models");
-exports.fetchCatagory = async (catagoryId, next) => {
+let { Ingredient } = require("../db/models");
+let { Category } = require("../db/models");
+exports.fetchCategory = async (categoryId, next) => {
   try {
-    const catagory = await Catagory.findByPk(catagoryId);
-    return catagory;
+    const category = await Category.findByPk(categoryId);
+    return category;
   } catch (error) {
     next(error);
   }
 };
-exports.showCatagories = async (req, res, next) => {
-  try {
-    const catagories = await Catagory.findAll({
-      attributes: ["id", "name", "image", "slug"],
-      include: {
-        model: Catagory,
-        as: "catagories",
 
-        attributes: ["id"],
-      },
+exports.showCategories = async (req, res, next) => {
+  try {
+    const categories = await Category.findAll({
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+  
     });
-    res.json(catagories);
+    res.json(categories);
   } catch (error) {
     next(error);
   }
 };
 
-
-exports.catagoryAdd = async (req, res, next) => {
+exports.categoryAdd = async (req, res, next) => {
   try {
     if (req.file) {
       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
       console.log(req.body);
     }
-    const newCatagory = await Catagory.create(req.body);
-    res.status(201).json(newCatagory);
+    const newCategory = await Category.create(req.body);
+    res.status(201).json(newCategory);
   } catch (error) {
     next(error);
   }

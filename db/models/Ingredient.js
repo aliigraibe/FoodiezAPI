@@ -11,8 +11,11 @@ module.exports = Ingredient = (sequelize, DataTypes) => {
   });
 
   Ingredient.associate = (models) => {
-    models.Catagory.hasMany(Ingredient, { foreignKey: "catagoryId", as: "Ingredients" });
-    Ingredient.belongsTo(models.Catagory, { foreignKey: "catagoryId" });
+    models.Category.hasMany(Ingredient, {
+      foreignKey: "categoryId",
+      as: "Ingredients",
+    });
+    Ingredient.belongsTo(models.Category, { foreignKey: "categoryId" });
   };
   return Ingredient;
 };

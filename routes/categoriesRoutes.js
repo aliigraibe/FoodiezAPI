@@ -11,7 +11,7 @@ let {
 router.param("categoryId", async (req, res, next, categoryId) => {
   const categories = await fetchCategory(categoryId, next);
   if (categories) {
-    req.Category = categories;
+    req.category = categories;
     next();
   } else {
     const err = new Error("categories Not Found");

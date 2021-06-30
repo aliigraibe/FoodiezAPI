@@ -14,7 +14,11 @@ exports.showCategories = async (req, res, next) => {
   try {
     const categories = await Category.findAll({
       attributes: { exclude: ["createdAt", "updatedAt"] },
-  
+      include: {
+        model: Ingredient,
+        as: "ingredients",
+        attributes: ["id"],
+      },
     });
     res.json(categories);
   } catch (error) {
@@ -39,6 +43,8 @@ exports.ingredientAdd = async (req, res, next) => {
     if (req.file) {
       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
     }
+    req.body.categoryId = req.category.id;
+
     const newIngredient = await Ingredient.create(req.body);
     res.status(201).json(newIngredient);
   } catch (error) {

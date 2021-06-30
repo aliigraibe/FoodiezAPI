@@ -4,11 +4,14 @@ const cors = require("cors");
 
 const ingredientsRoutes = require("./routes/ingredientsRoutes");
 const categoriesRoutes = require("./routes/categoriesRoutes");
+const recipesRoutes = require("./routes/recipesRoutes");
+// const db = require("./db/models");
 const app = express();
 
 app.use(express.json());
 app.use(cors());
-
+// db.sequelize.sync({ force: true });
+app.use("/recipes", recipesRoutes);
 app.use("/categories", categoriesRoutes);
 app.use("/ingredients", ingredientsRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));

@@ -16,6 +16,7 @@ module.exports = Ingredient = (sequelize, DataTypes) => {
       as: "ingredients",
     });
     Ingredient.belongsTo(models.Category, { foreignKey: "categoryId" });
+    
   };
   return Ingredient;
 };

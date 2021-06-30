@@ -46,6 +46,7 @@ exports.ingredientAdd = async (req, res, next) => {
     req.body.categoryId = req.category.id;
 
     const newIngredient = await Ingredient.create(req.body);
+    // newIngredient.addRecipe(newRecipe)
     res.status(201).json(newIngredient);
   } catch (error) {
     next(error);
